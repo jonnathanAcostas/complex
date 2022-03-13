@@ -2,6 +2,48 @@ const db = require('../config/config');
 
 const Field = {};
 
+
+Field.findByCategory = (id_category) => {
+    const sql = `
+    SELECT	
+	F.id,
+	F.name,
+	F.description,
+	F.image1,
+	F.image2,
+	F.id_category,
+    json_agg(
+        json_build_object(
+            'id', r.id,
+            'adress', r.name,
+            'street1', r.image,
+            'street2', r.route,
+            'reference', r.reference,
+            'latitude', r.latitude,
+            'longitude', r.longitude
+        )
+    ) AS address
+from
+	fields as F
+INNER JOIN
+	categories  as C
+on
+	F.id_category = C.id
+
+    INNER JOIN
+	adress as r
+on
+	r.id_field = F.id 
+where 
+	c.id = $1
+    
+    `;
+
+    return db.manyOrNone(sql, id_category);
+}
+    
+
+
 Field.create = (field) => {
     const sql = `
     INSERT INTO

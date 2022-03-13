@@ -4,6 +4,24 @@ const asyncForEach = require('../utils/async_foreach');
 
 module.exports ={
 
+
+    async findByCategory(req, res, next) {
+        try {
+            const id_category = req.params.id_category //CLIENTE
+            const data = await Field.findByCategory(id_category);
+            return res.status(201).json(data);
+
+
+        }catch(error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                message: `Error al listas canchas por categoria ${error}`,
+                success:false,
+                error: error
+            });
+        }
+    },
+
     async create(req, res, next) {
 
         let field = JSON.parse(req.body.field);
@@ -26,9 +44,9 @@ module.exports ={
                 field.id = data.id;
 
                 const start = async ()=> {
-                    await asyncForEach(files, async(flie) => {
+                    await asyncForEach(files, async(file) => {
                     const pathImage= `image_${Date.now()}`;
-                    const url = await storage(files, pathImage);
+                    const url = await storage(file, pathImage);
 
                     if(url !== undefined && url !== null){
                         if (inserts == 0){ //IMAGEN 1
@@ -38,9 +56,7 @@ module.exports ={
                         else if( inserts == 1){ //IMAGEN 2
                             field.image2 = url;
                         }
-                        else if( inserts == 2){ //IMAGEN 3
-                            field.image3 = url;
-                        }
+                
                     }
 
                     await Field.update(field);

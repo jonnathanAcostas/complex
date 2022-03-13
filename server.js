@@ -61,7 +61,7 @@ categories(app);
 fields(app, upload);
 
 
-server.listen(3000, '192.168.100.8', function(){
+server.listen(3000, '192.168.1.36', function(){
     console.log('Aplicación de NodeJS ' +  port + ' Iniciada...')
 });
 

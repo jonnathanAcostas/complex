@@ -28,6 +28,7 @@ class _ClientFieldListPageState extends State<ClientFieldListPage> {
     return Scaffold(
       key: _con.key,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: _menuDrawer(),
       ),
       drawer: _drawer(),
@@ -46,9 +47,11 @@ class _ClientFieldListPageState extends State<ClientFieldListPage> {
         alignment: Alignment.centerLeft,
         child: Image.asset('assets/img/menu.png', width: 20, height: 20),
       )
-    );
-  }
 
+    );
+  
+  }
+   
 
   Widget _drawer() {
     return Drawer(

@@ -1,4 +1,4 @@
 class Enviroment {
 
-  static const String API_GEOFIELD = "192.168.100.8:3000";
+  static const String API_GEOFIELD = "192.168.1.36:3000";
 }

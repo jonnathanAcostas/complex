@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:client/src/models/adress.dart';
+
 Field fieldFromJson(String str) => Field.fromJson(json.decode(str));
 
 String fieldToJson(Field data) => json.encode(data.toJson());
@@ -13,6 +15,12 @@ class Field {
     int idCategory;
     int quantity;
 
+List<Adress> adress = [];
+
+List<Field> toList = [];
+
+  
+
 
     Field({
         this.id,
@@ -22,18 +30,20 @@ class Field {
         this.image2,
         this.idCategory,
         this.quantity,
+        this.adress
     });
 
     
 
     factory Field.fromJson(Map<String, dynamic> json) => Field(
-        id: json["id"],
+        id: json["id"] is int ? json['id'].toString(): json["id"],
         name: json["name"],
         description: json["description"],
         image1: json["image1"],
         image2: json["image2"],
         idCategory: json["id_category"],
         quantity: json["quantity"],
+        adress: json["adress"] == null ? []: List<Adress>.from(json['adress'].map((model)=> Adress.fromJson(model))) ??[],
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,4 +55,13 @@ class Field {
         "id_category": idCategory,
         "quantity": quantity,
     };
+
+  Field.fromJsonList(List<dynamic> jsonList) {
+      if (jsonList == null) return;
+      jsonList.forEach((item){
+        Field field = Field.fromJson(item);
+        toList.add(field);
+      });
+    }
+
 }
