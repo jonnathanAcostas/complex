@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "241598632911",
+    "project_id": "geofield-d8963",
+    "storage_bucket": "geofield-d8963.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241598632911:android:3b6bb7a733055f5d44f8ba",
+        "android_client_info": {
+          "package_name": "com.geofield.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241598632911-9em1euef9ikhs1sku0muvs35sjvf89ks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbeeLD-x3sjlqUj44VIq4OMYJ5JGp8DLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241598632911-9em1euef9ikhs1sku0muvs35sjvf89ks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
