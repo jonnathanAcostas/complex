@@ -18,7 +18,6 @@ Field.findByCategory = (id_category) => {
             'adress', r.name,
             'street1', r.image,
             'street2', r.route,
-            'reference', r.reference,
             'latitude', r.latitude,
             'longitude', r.longitude
         )

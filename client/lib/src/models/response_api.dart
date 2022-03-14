@@ -5,7 +5,7 @@ ResponseApi responseApiFromJson(String str) => ResponseApi.fromJson(json.decode(
 String responseApiToJson(ResponseApi data) => json.encode(data.toJson());
 
 class ResponseApi {
-String message;
+    String message;
     String error;
     bool success;
     dynamic data;

@@ -13,10 +13,9 @@ class Adress {
     String adress;
     String street1;
     String street2;
-    String reference;
     double latitude;
     double longitude;
-    int idField;
+    List<Adress> toList = [];
 
 
     Adress({
@@ -24,24 +23,27 @@ class Adress {
         this.adress,
         this.street1,
         this.street2,
-        this.reference,
         this.latitude,
         this.longitude,
-        this.idField,
     });
 
   
-
+Adress.fromJsonList(List<dynamic> jsonList) {
+      if (jsonList == null) return;
+      jsonList.forEach((item){
+        Adress adress = Adress.fromJson(item);
+        toList.add(adress);
+      });
+    }
 
     factory Adress.fromJson(Map<String, dynamic> json) => Adress(
-        id: json["id"],
+        id: json["id"] is int ? json['id'].toString(): json["id"],
         adress: json["adress"],
         street1: json["street1"],
         street2: json["street2"],
-        reference: json["reference"],
-        latitude: json["latitude"].toDouble(),
-        longitude: json["longitude"].toDouble(),
-        idField: json["id_field"],
+        latitude: json["latitude"]is String ? double.parse(json["latitude"]) : json["latitude"],
+        longitude: json["longitude"]is String ? double.parse(json["longitude"]) : json["longitude"],
+       
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,9 +51,8 @@ class Adress {
         "adress": adress,
         "street1": street1,
         "street2": street2,
-        "reference": reference,
         "latitude": latitude,
         "longitude": longitude,
-        "id_field": idField,
+       
     };
 }

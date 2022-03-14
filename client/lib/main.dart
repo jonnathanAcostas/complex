@@ -1,6 +1,9 @@
 import 'package:client/src/pages/cancha/categories/create/cancha_categories_create_page.dart';
 import 'package:client/src/pages/cancha/fields/create/cancha_fields_create_page.dart';
 import 'package:client/src/pages/cancha/field/list/cancha_field_list_page.dart';
+import 'package:client/src/pages/client/adress/create/client_adress_create_page.dart';
+import 'package:client/src/pages/client/adress/list/client_adress_list_page.dart';
+import 'package:client/src/pages/client/adress/map/client_adress_map_page.dart';
 import 'package:client/src/pages/client/field/list/client_field_list_page.dart';
 import 'package:client/src/pages/client/field/list/update/client_update_page.dart';
 import 'package:client/src/pages/login/login_page.dart';
@@ -34,6 +37,9 @@ class _MyAppState extends State<MyApp> {
         'roles' : (BuildContext context) =>  RolesPage(),
         'client/update' : (BuildContext context) =>  ClientUpdatePage(),
         'client/field/list' : (BuildContext context) =>  ClientFieldListPage(),
+        'client/adress/list' : (BuildContext context) =>  ClientAdressListPage(),
+        'client/adress/create' : (BuildContext context) =>  ClientAdressCreatePage(),
+        'client/adress/map' : (BuildContext context) =>  ClientAdressMapPage(),
         'cancha/field/list' : (BuildContext context) =>  CanchaFieldListPage(),
         'cancha/categories/create' : (BuildContext context) =>  CanchaCategoriesCreatePage(),
         'cancha/fields/create' : (BuildContext context) =>  CanchaFieldsCreatePage(),   

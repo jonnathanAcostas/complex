@@ -17,6 +17,7 @@ class _CanchaCategoriesCreatePageState extends State<CanchaFieldsCreatePage> {
 
 CanchaFieldsCreateController _con = new CanchaFieldsCreateController();
 
+
 @override
   void initState() {
     // TODO: implement initState
@@ -50,6 +51,7 @@ CanchaFieldsCreateController _con = new CanchaFieldsCreateController();
             ),
           ),
           _dropDownCategories(_con.categories),
+          _buttonNext()
         ],
       ),
       bottomNavigationBar: _buttonCreate(),
@@ -217,7 +219,52 @@ CanchaFieldsCreateController _con = new CanchaFieldsCreateController();
       );
     }
 
+Widget _buttonNext(){
+  return Container (
+    margin: EdgeInsets.only(left:30, right:30, top:30, bottom:30),
+    child: ElevatedButton(
+      onPressed : _con.goToAdress,
+      style: ElevatedButton.styleFrom(
+        primary: MyColors.primaryColor,
+        padding: EdgeInsets.symmetric(vertical: 5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12)
+           )
 
+      ),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: 50,
+              alignment: Alignment.center,
+              child: Text(
+                'Crear dirección de Cancha',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+                ),
+            ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: EdgeInsets.only(left:30, top: 9),
+                height:30,
+                child:Icon(
+                  Icons.next_plan,
+                  color: Colors.white,
+                  size: 30
+                )
+              )
+            )
+        ]
+      )
+    )
+  );
+}
 
 Widget _buttonCreate() {
     return Container( 
