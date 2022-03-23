@@ -41,11 +41,18 @@ class _ClientAdressListPageState extends State<ClientAdressListPage> {
       ),
       body:Stack(
         children: [
+          Positioned(
+            top: 0,
+            child: _textSelectAdress()
+
+          ),
           _textSelectAdress(),
-            _listAdress(),  
+            Container(
+              margin: EdgeInsets.only(top: 50),
+              child: _listAdress()),  
         ]
       ) ,
-      bottomNavigationBar: _buttonAccept(),
+  
     );
   }
   
@@ -65,37 +72,21 @@ class _ClientAdressListPageState extends State<ClientAdressListPage> {
   }
 
 
-Widget _buttonAccept(){
-  return Container(
-    height: 50,
-    width: double.infinity,
-    margin: EdgeInsets.symmetric(vertical:50,horizontal:50 ),
-    child: ElevatedButton(
-      onPressed: (){},
-      child: Text(
-        'Aceptar'
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30)
-          ),
-          primary: MyColors.primaryColor
-        ),
-    ),
-  );
-}
+
 
   Widget _listAdress(){
     return FutureBuilder(
       future: _con.getAdress(),
-      builder:(context, AsyncSnapshot<List> snapshot){
+      builder:(context, AsyncSnapshot<List<Adress>> snapshot){
         if (snapshot.hasData){
 
           if(snapshot.data.length>0){
+
             return ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (_, index){
+                print(index);
                 return _radioSelectorAdress(snapshot.data[index], index);
               },
             );
@@ -108,8 +99,9 @@ Widget _buttonAccept(){
           return _noAdress();
         }
       }
+      
     );
-
+  
   }
 
   Widget _radioSelectorAdress(Adress adress, int index) {
@@ -118,39 +110,45 @@ Widget _buttonAccept(){
       margin: EdgeInsets.symmetric(horizontal:20),
       child: Column(
         children: [
-          Radio(
-            value: index,
-            groupValue: _con.radioValue,
-            onChanged: _con.handleRadioValueChange,
-
-          ),
-          Column(
+          Row(
             children: [
-              Text(
-                adress.adress ?? '',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                )
-              ),Text(
-                adress.street1 ?? '',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                )
+              Radio(
+                value: index,
+                groupValue: _con.radioValue,
+                onChanged: _con.handleRadioValueChange,
               ),
-              Text(
-                adress.street2 ?? '',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                )
-              )
-            ]
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    adress?.adress ?? '',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ),Text(
+                    adress?.street1 ?? '',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ),
+                  Text(
+                    adress.street2 ?? '',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    )
+                  )
+                ]
+              ),
+             
+            ],
           ),
-          Divider(
-            color: Colors.grey
-          )
+           Divider(
+                color: Colors.grey
+              )
         ],
       )
     );

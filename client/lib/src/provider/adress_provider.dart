@@ -27,20 +27,23 @@ Future init(BuildContext context, User sessionUser){
 Future<List<Adress>>getAll() async {
 
   try {
-     Uri url = Uri.http(_url, '$_api/getAll');
+    
+     Uri url = Uri.http(_url, '$_api/getAllAdress');
+     print('xd ${url}');
       Map<String, String> headers = {
         'Content-type': 'application/json',
         'Authorization' : sessionUser.sessionToken
 
       };
       final res = await http.get(url, headers: headers);
+      
 
 
       if(res.statusCode == 401){
         Fluttertoast.showToast(msg: 'Sesión expirada');
         new SharedPref().logout(context, sessionUser.id);
       }
-      final data = json.decode(res.body); // RECIBE CATEGORIAS
+      final data = json.decode(res.body); // RECIBE LAS DIRECCIONES
       Adress adress =  Adress.fromJsonList(data);
       return adress.toList;
 

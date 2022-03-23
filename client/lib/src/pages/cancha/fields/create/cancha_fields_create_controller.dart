@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
 
+import 'package:client/src/models/adress.dart';
 import 'package:client/src/models/category.dart';
 import 'package:client/src/models/field.dart';
 import 'package:client/src/models/response_api.dart';
@@ -59,7 +60,11 @@ ProgressDialog _progressDialog;
 
   }
 
+
 void createField() async {
+  
+  Adress a = Adress.fromJson(await sharedPref.read('adress') ?? {});
+  print(a.id);
   String name = nameController.text;
   String description = descriptionController.text;
 

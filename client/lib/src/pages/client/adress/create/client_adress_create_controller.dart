@@ -67,8 +67,13 @@ void createAdress() async {
   ResponseApi responseApi =await  _adressProvider.create(adress);
 
   if(responseApi.success){
+
+    adress.id = responseApi.data;
+    _sharedPref.save('adress', adress);
+
     Fluttertoast.showToast(msg: responseApi.message);
-    Navigator.pop(context); 
+    Navigator.pop(context, true); 
+    refresh();
   }
 
 }

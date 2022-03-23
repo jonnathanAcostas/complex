@@ -45,6 +45,9 @@ void goToFieldCreate(){
   Navigator.pushNamed(context, 'cancha/fields/create');
 }
 
+void goToUpdatePage() {
+    Navigator.pushNamed(context, 'client/update');
+  }
 
 void openDrawer(){
 key.currentState.openDrawer();

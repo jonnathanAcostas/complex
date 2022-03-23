@@ -156,7 +156,7 @@ module.exports = {
             if (User.isPasswordMatched(password, myUser.password)) {
                 const token = jwt.sign({id: myUser.id, email: myUser.email}, keys.secretOrKey, {
                     // expiresIn: (60*60*24) // 1 HORA
-                    // expiresIn: (60*3) // 2 min
+                    // expiresIn: (60*1) // 2 min
                 });
                 const data = {
                     id: myUser.id,
@@ -206,7 +206,7 @@ try{
         message: 'Cerrado de sesión exitoso',
     });
 
-}catch (e) {
+}catch (error) {
 
     console.log(`Error: ${error}`);
     return res.status(501).json({

@@ -3,7 +3,7 @@ const db = require('../config/config');
 const Adress = {};
 
 
-Adress.getAll = () => {
+Adress.getAllAdress = () => {
     const sql = `
     SELECT
         id,
@@ -15,7 +15,7 @@ Adress.getAll = () => {
     FROM
         adress
     `;
-    return db.oneOrNone(sql);
+    return db.manyOrNone(sql);
 }
 
 

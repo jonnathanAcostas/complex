@@ -15,26 +15,17 @@ Field.findByCategory = (id_category) => {
     json_agg(
         json_build_object(
             'id', r.id,
-            'adress', r.name,
-            'street1', r.image,
-            'street2', r.route,
+            'adress', r.adress,
+            'street1', r.street1,
+            'street2', r.street2,
             'latitude', r.latitude,
             'longitude', r.longitude
         )
     ) AS address
-from
-	fields as F
-INNER JOIN
-	categories  as C
-on
-	F.id_category = C.id
-
-    INNER JOIN
-	adress as r
-on
-	r.id_field = F.id 
-where 
-	c.id = $1
+from fields as F
+INNER join 	categories  as C on F.id_category = C.id
+INNER JOIN	adress as r on 	F.id_adress =r.id
+where c.id = $1 GROUP by F.id;
     
     `;
 

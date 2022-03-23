@@ -1,5 +1,6 @@
 import 'package:client/src/pages/cancha/field/list/cancha_field_list_controller.dart';
 import 'package:client/src/utils/my_colors.dart';
+import 'package:client/src/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -34,12 +35,25 @@ class _CanchaFieldListPageState extends State<CanchaFieldListPage> {
         leading: _menuDrawer(),
       ),
       drawer: _drawer(),
-      body: Center(
-        child: Text('Lista de Canchas'),
-      ),
+      body: _noAdress()
       
     );
   }
+  
+   Widget _noAdress(){
+    return Column(
+      children: [
+         Container(
+            margin: EdgeInsets.only(top: 30),
+            child: NoDataWidget(
+              text: ''
+              )
+              ),
+     
+    ],
+    );
+  }
+
 
   Widget _menuDrawer(){
     return GestureDetector(
@@ -122,6 +136,12 @@ class _CanchaFieldListPageState extends State<CanchaFieldListPage> {
         title: Text('Crear Nueva Cancha'),
         trailing:  Icon(Icons.sports_soccer),
         
+      ),
+
+   ListTile(
+        onTap: _con.goToUpdatePage,
+        title: Text('Editar Perfil'),
+        trailing: Icon(Icons.edit_outlined),
       ),
 
        _con.user != null ? 

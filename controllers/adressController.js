@@ -6,7 +6,7 @@ module.exports = {
 
         try{
 
-            const data = await Adress.getAll();
+            const data = await Adress.getAllAdress();
             console.log(`Adress ${JSON.stringify (data)}`);
             return res.status(201).json(data);
 
@@ -32,7 +32,7 @@ module.exports = {
             return res.status(201).json({
                 success: true,
                 message: 'Dirección creada',
-               data: data
+               data: data.id
             })
 
         }catch(error) {

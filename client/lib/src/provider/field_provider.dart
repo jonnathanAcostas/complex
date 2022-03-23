@@ -25,33 +25,28 @@ class FieldsProvider {
   }
 
 
-Future<List<Field>>getByCategory(String id) async {
-
-  try {
-     Uri url = Uri.http(_url, '$_api/findByCategory/${id}');
+Future<List<Field>> getByCategory(String id) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/findByCategory/${id}');
+ 
       Map<String, String> headers = {
         'Content-type': 'application/json',
-        'Authorization' : sessionUser.sessionToken
-
+        'Authorization': sessionUser.sessionToken
       };
       final res = await http.get(url, headers: headers);
 
-
-      if(res.statusCode == 401){
+      if (res.statusCode == 401) {
         Fluttertoast.showToast(msg: 'Sesión expirada');
         new SharedPref().logout(context, sessionUser.id);
       }
       final data = json.decode(res.body); // RECIBE CATEGORIAS
-      Field field =  Field.fromJsonList(data);
-      print(data);
+      Field field = Field.fromJsonList(data);
       return field.toList;
-
-
-  }catch (e){
-    print ('Error: $e');
-    return [];
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
   }
-}
 
   Future<Stream> create(Field field, List<File> images) async {
     try {

@@ -7,7 +7,7 @@ module.exports = (app)  => {
 *   GET ROUTES
 */
 
-app.get('/api/adress/getAll',passport.authenticate('jwt', {session: false}),AdressController.getAllAdress); 
+app.get('/api/adress/getAllAdress',passport.authenticate('jwt', {session: false}),AdressController.getAllAdress); 
 
 
 /*
