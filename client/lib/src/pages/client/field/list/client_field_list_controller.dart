@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:client/src/models/category.dart';
 import 'package:client/src/models/field.dart';
@@ -41,6 +42,7 @@ class ClientFieldListController {
     _categoriesProvider.init(context, user);
     _fieldsProvider.init(context, user);
     getCategories();
+
     refresh();
   }
 
@@ -93,8 +95,6 @@ class ClientFieldListController {
 
           adressName = '$direction $street, $city, $department, $country';
           adressLatLng = new LatLng(lat, lng);
-          // print('Lat: ${adressLatLng.latitude}');
-          // print('LNG: ${adressLatLng.longitude}');
 
           refresh();
         }

@@ -45,8 +45,7 @@ class _ClientFieldListPageState extends State<ClientFieldListPage> {
         leading: _menuDrawer(),
       ),
       drawer: _drawer(),
-      body:
-      Container(
+      body: Container(
           margin:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.14),
           child: _googleMaps()),
@@ -83,17 +82,18 @@ class _ClientFieldListPageState extends State<ClientFieldListPage> {
           icon: BitmapDescriptor.defaultMarker));
     }
 
-    for (var item in _con.fields) {
-      print('item2 ${item.adress.toString()}');
+    for (var i = 0; i < _con.fields.length; i++) {
       marker.add(Marker(
-          markerId: MarkerId(item.adress[0].adress.toString()),
+          markerId: MarkerId(_con.fields[i].id),
           infoWindow: InfoWindow(
-              title: item.description,
-              snippet: item.adress[0].adress.toString().toUpperCase(),
+              title: _con.fields[i].description,
+              snippet: _con.fields[i].adress[0].adress.toString().toUpperCase(),
               onTap: () {}),
-          position: LatLng(item.adress[0].latitude, item.adress[0].longitude),
+          position: LatLng(_con.fields[i].adress[0].latitude,
+              _con.fields[i].adress[0].longitude),
           icon: BitmapDescriptor.defaultMarker));
     }
+
     return marker;
   }
 
@@ -159,6 +159,10 @@ class _ClientFieldListPageState extends State<ClientFieldListPage> {
         onTap: _con.goToUpdatePage,
         title: Text('Editar Perfil'),
         trailing: Icon(Icons.edit_outlined),
+      ),
+      ListTile(
+        title: Text('Mis canchas'),
+        trailing: Icon(Icons.sports_soccer),
       ),
       _con.user != null
           ? _con.user.roles.length > 1

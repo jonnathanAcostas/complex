@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:client/src/models/adress.dart';
 import 'package:client/src/models/field.dart';
 import 'package:client/src/models/response_api.dart';
@@ -10,88 +12,80 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-
 class ClientAdressCreateController {
-BuildContext context;
-Function refresh;
+  BuildContext context;
+  Function refresh;
 
-TextEditingController refPointController = new TextEditingController();
+  TextEditingController refPointController = new TextEditingController();
 
-TextEditingController adressController = new TextEditingController();
+  TextEditingController adressController = new TextEditingController();
 
-TextEditingController street1Controller = new TextEditingController();
+  TextEditingController street1Controller = new TextEditingController();
 
-TextEditingController street2Controller = new TextEditingController();
+  TextEditingController street2Controller = new TextEditingController();
 
+  Map<String, dynamic> refPoint;
 
-Map<String, dynamic> refPoint;
+  AdressProvider _adressProvider = new AdressProvider();
+  User user;
 
-AdressProvider _adressProvider = new AdressProvider();
-User user;
+  SharedPref _sharedPref = new SharedPref();
 
-SharedPref _sharedPref = new SharedPref();
+  Future init(BuildContext context, Function refresh) async {
+    this.context = context;
+    this.refresh = refresh;
+    user = User.fromJson(await _sharedPref.read('user'));
 
-
-
-Future init(BuildContext context,Function refresh) async {
-  this.context = context;
-  this.refresh = refresh;
-  user = User.fromJson(await _sharedPref.read('user'));
-  _adressProvider.init(context, user);
-}
-
-
-void createAdress() async {
-  String adressName = adressController.text;
-  String street1 = street1Controller.text;
-  String street2 = street2Controller.text;
-  double lat = refPoint['lat'] ??  0;
-  double lng = refPoint['lng'] ??  0;
-
-
-  if(adressName.isEmpty || street1.isEmpty || street2.isEmpty || lat ==0 || lng == 0){
-
-    MySnackbar.show(context,'Complete los campos');
-    return;
-
+    _adressProvider.init(context, user);
   }
 
-  Adress adress = new Adress(
-    adress: adressName,
-     street1: street1,
-     street2: street2,
-      latitude: lat,
-       longitude: lng
-       );
+  void createAdress() async {
+    String adressName = adressController.text;
+    String street1 = street1Controller.text;
+    String street2 = street2Controller.text;
+    double lat = refPoint['lat'] ?? 0;
+    double lng = refPoint['lng'] ?? 0;
 
-  ResponseApi responseApi =await  _adressProvider.create(adress);
+    if (adressName.isEmpty ||
+        street1.isEmpty ||
+        street2.isEmpty ||
+        lat == 0 ||
+        lng == 0) {
+      MySnackbar.show(context, 'Complete los campos');
+      return;
+    }
 
-  if(responseApi.success){
+    Adress adress = new Adress(
+        adress: adressName,
+        street1: street1,
+        street2: street2,
+        latitude: lat,
+        longitude: lng);
 
-    adress.id = responseApi.data;
-    _sharedPref.save('adress', adress);
+    ResponseApi responseApi = await _adressProvider.create(adress);
 
-    Fluttertoast.showToast(msg: responseApi.message);
-    Navigator.pop(context, true); 
-    refresh();
+    if (responseApi.success) {
+      adress.id = responseApi.data;
+      _sharedPref.save('adress', adress);
+
+      var address = _sharedPref.read('adress');
+
+      Fluttertoast.showToast(msg: responseApi.message);
+      Navigator.pop(context, true);
+      refresh();
+    }
   }
 
-}
+  void openMap() async {
+    refPoint = await showMaterialModalBottomSheet(
+        context: context,
+        isDismissible: false,
+        enableDrag: false,
+        builder: (context) => ClientAdressMapPage());
 
-void openMap()async {
-  refPoint = await showMaterialModalBottomSheet(
-    context: context,
-    isDismissible: false,
-    enableDrag: false,
-    builder: (context) => ClientAdressMapPage()
-  );
-
-  if(refPoint != null){
-    refPointController.text = refPoint['adress'];
-    refresh();
+    if (refPoint != null) {
+      refPointController.text = refPoint['adress'];
+      refresh();
+    }
   }
-
-}
-
-
 }

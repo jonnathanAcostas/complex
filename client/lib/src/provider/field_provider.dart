@@ -24,11 +24,9 @@ class FieldsProvider {
     this.sessionUser = sessionUser;
   }
 
-
-Future<List<Field>> getByCategory(String id) async {
+  Future<List<Field>> getByCategoryField(String idCategory) async {
     try {
-      Uri url = Uri.http(_url, '$_api/findByCategory/${id}');
- 
+      Uri url = Uri.http(_url, '$_api/findByCategoryField/$idCategory');
       Map<String, String> headers = {
         'Content-type': 'application/json',
         'Authorization': sessionUser.sessionToken
@@ -48,14 +46,36 @@ Future<List<Field>> getByCategory(String id) async {
     }
   }
 
-  Future<Stream> create(Field field, List<File> images) async {
+  Future<List<Field>> getByCategory(String id) async {
     try {
-      Uri url = Uri.http(_url, '$_api/create');
+      Uri url = Uri.http(_url, '$_api/findByCategory/${id}');
+
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken
+      };
+      final res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 401) {
+        Fluttertoast.showToast(msg: 'Sesión expirada');
+        new SharedPref().logout(context, sessionUser.id);
+      }
+      final data = json.decode(res.body); // RECIBE CATEGORIAS
+      Field field = Field.fromJsonList(data);
+      return field.toList;
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
+  }
+
+  Future<Stream> create(Field field, List<File> images, String idAdress) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/create/$idAdress');
       final request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] = sessionUser.sessionToken;
 
       for (int i = 0; i < images.length; i++) {
-
         request.files.add(http.MultipartFile(
             'image',
             http.ByteStream(images[i].openRead().cast()),

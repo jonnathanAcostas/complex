@@ -5,10 +5,13 @@ const asyncForEach = require('../utils/async_foreach');
 module.exports ={
 
 
+
+
     async findByCategory(req, res, next) {
         try {
             const id_category = req.params.id_category //CLIENTE
             const data = await Field.findByCategory(id_category);
+         
             return res.status(201).json(data);
 
 
@@ -22,9 +25,31 @@ module.exports ={
         }
     },
 
+    async findByCategoryField(req, res, next) {
+        try {
+            const id_category = req.params.id_category //CLIENTE
+            const data = await Field.findByCategoryField(id_category);
+            console.log(data); 
+            return res.status(201).json(data);
+
+
+        }catch(error) {
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                message: `Error al listas canchas`,
+                success:false,
+                error: error
+            });
+        }
+    },
+
+
+
     async create(req, res, next) {
 
+        const id_adress = req.params.id_adress //CLIENTE
         let field = JSON.parse(req.body.field);
+        field.adress = id_adress
         console.log(`field ${JSON.stringify(field)}`);
         
         const files = req.files;
